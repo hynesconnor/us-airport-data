@@ -20,19 +20,15 @@ for (i = 0; i < 13; i++) {
 // adds airports to map, determines icon/color
 var airports = null;
 airports = L.geoJson.ajax("assets/airports.geojson", {
-    
     onEachFeature: function (feature, layer) {
         layer.bindPopup(feature.properties.AIRPT_NAME);
     },
-    
     pointToLayer: function (feature, latlng) {
         var id = 0;
         if (feature.properties.CNTL_TWR == "Y") { id = 10; }
         else { id = 1;}
         return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-plane marker-color-' + (id + 1).toString() })});
     },
-
-
     attribution: 'Mike Bostock - D3'
 }).addTo(mymap);
 
@@ -53,7 +49,7 @@ function setColor(count) {
     return colors[id];
 }
 
-// 7. Set style function that sets fill color.md property equal to cell tower density
+// Set style function that sets fill color.md property equal to cell tower density
 function style(feature) {
     return {
         fillColor: setColor(feature.properties.count),
@@ -66,33 +62,42 @@ function style(feature) {
 }
 
 var states = null;
-counties = L.geoJson.ajax("assets/us-states.geojson", {
+states = L.geoJson.ajax("assets/us-states.geojson", {
     style: style,
+    
 }).addTo(mymap);
 
 // 9. Create Leaflet Control Object for Legend
 var legend = L.control({position: 'topright'});
 
-// 10. Function that runs when legend is added to map
+// function to create legend
 legend.onAdd = function () {
-
-    // Create Div Element and Populate it with HTML
     var div = L.DomUtil.create('div', 'legend');
-    div.innerHTML += '<b># Airports In the United States</b><br />';
+    div.innerHTML += '<b>Airports In Each State</b><br />';
     div.innerHTML += '<i style="background: ' + colors[5] + '; opacity: 0.5"></i><p> 21+ </p>';
     div.innerHTML += '<i style="background: ' + colors[4] + '; opacity: 0.5"></i><p> 16-20 </p>';
     div.innerHTML += '<i style="background: ' + colors[3] + '; opacity: 0.5"></i><p> 11-15 </p>';
     div.innerHTML += '<i style="background: ' + colors[2] + '; opacity: 0.5"></i><p> 6-10 </p>';
     div.innerHTML += '<i style="background: ' + colors[1] + '; opacity: 0.5"></i><p> 0-5 </p>';
-    div.innerHTML += '<hr><b>Control Tower<b><br />';
+    div.innerHTML += '<hr><b>Control Towers<b><br />';
     div.innerHTML += '<i class="fa fa-plane marker-color-11"></i><p> Air Traffic Control Tower </p>';
     div.innerHTML += '<i class="fa fa-plane marker-color-2"></i><p> No Air Traffic Control Tower </p>';
-
-    // Return the Legend div containing the HTML content
     return div;
 };
 
-
-// 11. Add a legend to map
+// adds legend
 legend.addTo(mymap);
 
+// scale bar
+L.control.scale({position: 'bottomleft'}).addTo(mymap);
+
+// adds ruler function
+var options = {
+    position: 'topleft',
+    lengthUnit: {
+      factor: 0.621371,    //  from km to m
+      display: 'Miles',
+      decimal: 2
+    }
+  };
+L.control.ruler(options).addTo(mymap);
