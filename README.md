@@ -1,4 +1,4 @@
-[View this project here](https://hynesconnor.github.io/us-airport-data/)
+[View this project here.](https://hynesconnor.github.io/us-airport-data/)
 
 This project is titled An Analysis of United States Airpots Based on Location and Air Control Tower Status.
 The goal of the project is to give an idea of how many airports each state has, as well as if they are large enough to 
@@ -10,4 +10,4 @@ The custom functionality that I added to the map is a measuring tool. This tool 
 and construct line segments that tell you how far the two points are from one another. This is ideal for measuring distances
 between airpots. 
 
-Airport data for this project is sourced from Mike Bostock (https://bost.ocks.org/mike/).
+Airport data for this project is sourced from Mike Bostock. [Data is avaliable here.](https://bost.ocks.org/mike/)
